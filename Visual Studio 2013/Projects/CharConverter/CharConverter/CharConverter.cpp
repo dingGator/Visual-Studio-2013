@@ -1,36 +1,24 @@
 //Kim Lien Chu	
 //COP2000.0M1
-/* Character Converter Program
+/**************************************************
+Character Converter Program
 //	1.  Has CharConverter Class
-		a. has upperCase member function
-			1.  accept string:  inputStr
-			2.  convert all lowercase characters in string
-				a. to uppercase:  upCaseStr 
-			3.  if not letter or uppercase 
-				a. then left alone
-			4.  return converted string:  upCaseStr
-		b.  Has properWord member function
-			1.  accept string:  inputPhrase
-			2.  convert first letter of each word to uppercase
-			3.  return convert phrase:  upCasePhrase
 	2.	Prompt user to input a string
 	3.  Call properWords function 
 	4.  display the output of properWords
 	5.  Call uppercase function
 	6.  display the output of uppercase
-	7.  loop to allow additional strings 
-		a.  to be converted 
-		b.  displayed converted strings
-		c.  until user chooses to quit
-
-*/
+	7.  loop to allow additional strings conversion 
+		
+*********************************************************/
 #include <iostream>
 #include <iomanip>
 #include <string>
 #include <cctype>
 using namespace std;
 
-/*     CharConverter Class
+/****************************************************
+       CharConverter Class
 a.	has upperCase member function
 	1.  accept string : inputStr
 	2.  convert all lowercase characters in string
@@ -44,9 +32,7 @@ b.  Has properWords member function
 	2.  convert first letter of each word to uppercase
 	3.  return convert phrase:  upCasePhrase
 
-*/
-
-
+************************************************************/
 class CharConverter
 {
 private:
@@ -71,7 +57,7 @@ a.	to uppercase : upCaseStr
 a.	then left alone
 4.  return converted string : upCaseStr
 *************************************************/
-CharConverter::CharConverter()
+CharConverter::CharConverter()   //constructor
 {
 	string inputStr;
 }
@@ -88,7 +74,6 @@ string CharConverter::uppercase(string inputStr)
 				upCaseString[charIdx] = toupper(upCaseString[charIdx]);  //convert to upperase
 			}
 		}
-		
 	}
 	// return the upper case string 
 	return upCaseString;
@@ -104,14 +89,12 @@ string CharConverter::properWords(string inputPhrase)
 	properString = inputPhrase;
 	for (int charIdx = 0; charIdx <= properString.length(); charIdx++)
 	{
-
-		if (isspace(properString[charIdx]) || charIdx == 0)
+		cout << "\n\n \t\t   index charIdx :  " << charIdx;
+		if ((isspace(properString[charIdx])))
 		{
-			if (isspace(properString[charIdx]))
-			{
-				charIdx = charIdx + 1;
-			}		
-			if (isalpha(properString[charIdx]))   //test for letter
+			charIdx = charIdx + 1;
+			//cout << "\n\n \t\t   index charIdx :  " << charIdx;
+			if (isalpha(properString[charIdx]))
 			{
 				if (islower(properString[charIdx]))   //test for lowercase
 				{
@@ -128,6 +111,7 @@ prototypes
 ******************/
 void validateChoice(char&);
 void validateString(string&);
+string getInputPhrase();
 /*******************************************
 	main
 		1.  Prompt user to input a string
@@ -135,10 +119,7 @@ void validateString(string&);
 		3.  display the output of properWords
 		4.  Call uppercase function
 		5.  display the output of uppercase
-		6.  loop to allow additional strings
-				a.  to be converted
-				b.  displayed converted strings
-				c.  until user chooses to quit
+		6.  loop to allow additional strings conversion
 ******************************************************/
 int main()
 {
@@ -146,31 +127,26 @@ int main()
 	string properPhrase;
 	string upCaseStr;
 	char yOrN ='y';
-
-		//	Prompt user to input a string
+	//	Prompt user to input a string
 	cout << "\n\n                 Welcome to the Phrase Converter \n";
 
 	while (yOrN == 'y')
-	{	
-		cin.sync();
-		cin.clear();
-		cout << "\n\n      Enter a phrase:  \n\n";
-		getline(cin, inputStr);
-		validateString(inputStr);
+	{
+		inputStr = getInputPhrase();
+	
 		if (cin)
-
 		{
 			CharConverter convertStr;
 			//  Call properWords function
 			properPhrase = convertStr.properWords(inputStr);
 			//  display the output of properWords
 			cout << "\n\n     Your phrase converted to proper phrase is:  \n\n"
-				<< properPhrase << "  \n\n ";
+				<< "\t\t  " << properPhrase << "  \n\n ";
 			//  Call uppercase function
 			upCaseStr = convertStr.uppercase(inputStr);
 			//  display the output of uppercase
 			cout << "\n\n     Your phrase converted to uppercase is:  \n\n"
-				<< upCaseStr << "  \n\n";
+				<<"\t\t   "<< upCaseStr << "  \n\n";
 		}
 
 		//  loop to convert more strings
@@ -180,11 +156,19 @@ int main()
 		cin >> yOrN;
 		validateChoice(yOrN);
 	}
-	//		to be converted
-		//		displayed converted strings
-		//		until user chooses to quit
-
+	
 	return 0;
+}
+
+string getInputPhrase()
+{
+	string inputPhrase;
+	cin.sync();
+	cin.clear();
+	cout << "\n\n      Enter a phrase:  \n\n \t\t";
+	getline(cin, inputPhrase);
+	validateString(inputPhrase);
+	return inputPhrase;
 }
 void validateChoice(char& a)
 {
@@ -195,7 +179,6 @@ void validateChoice(char& a)
 		cout << "\n\n       Invalid input:  (Enter y or n )";
 		cin >> a;
 	}
-
 }
 void validateString(string& inputString)
 {
